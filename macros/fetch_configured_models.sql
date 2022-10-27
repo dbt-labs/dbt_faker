@@ -7,6 +7,8 @@
     {% set resource_type="source" %}
     {% set configured_sources = [] %}
 
+    {{ print("Running some_macro: " ~ meta_config ~ ", " ~ sources) }}
+
     {{ dbt_meta_testing.logger("var `sources` is: " ~ sources) }}
 
     {% for node in graph.nodes.values() | selectattr("resource_type", "equalto", resource_type) %}
