@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: stg_tpch_customers
+        columns:
+      - name: customer_key
+                tests:
+          - unique
+          - not_null
+      - name: name
+              - name: address
+              - name: nation_key
+              - name: phone_number
+              - name: account_balance
+              - name: market_segment
+              - name: comment
+        
+  - name: stg_tpch_line_items
+        columns:
+      - name: order_item_key
+                tests:
+          - unique
+          - not_null
+      - name: order_key
+              - name: part_key
+              - name: supplier_key
+              - name: line_number
+              - name: quantity
+              - name: extended_price
+              - name: discount_percentage
+              - name: tax_rate
+              - name: return_flag
+              - name: status_code
+              - name: ship_date
+              - name: commit_date
+              - name: receipt_date
+              - name: ship_instructions
+              - name: ship_mode
+              - name: comment
+        
+  - name: stg_tpch_nations
+        columns:
+      - name: nation_key
+                tests:
+          - unique
+          - not_null
+      - name: name
+              - name: region_key
+              - name: comment
+         
+  - name: stg_tpch_orders
+        columns:
+      - name: order_key
+                tests:
+          - unique
+          - not_null
+      - name: customer_key
+              - name: status_code
+              - name: total_price
+              - name: order_date
+              - name: priority_code
+              - name: clerk_name
+              - name: ship_priority
+              - name: comment
+        
+  - name: stg_tpch_part_suppliers
+        columns:
+      - name: part_supplier_key
+                tests:
+          - unique
+          - not_null
+      - name: part_key
+              - name: supplier_key
+              - name: available_quantity
+              - name: cost
+              - name: comment
+                    
+  - name: stg_tpch_parts
+        columns:
+      - name: part_key
+                tests:
+          - unique
+          - not_null
+      - name: name
+              - name: manufacturer
+              - name: brand
+              - name: type
+              - name: size
+              - name: container
+              - name: retail_price
+              - name: comment
+        
+  - name: stg_tpch_regions
+        columns:
+      - name: region_key
+                tests:
+          - unique
+          - not_null
+      - name: name
+              - name: comment
+        
+  - name: stg_tpch_suppliers
+        columns:
+      - name: supplier_key
+                tests:
+          - unique
+          - not_null
+      - name: supplier_name
+              - name: supplier_address
+              - name: nation_key
+              - name: phone_number
+              - name: account_balance
+              - name: comment
+        description: '{{ doc("comment") }}'
