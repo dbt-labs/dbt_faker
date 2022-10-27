@@ -35,5 +35,4 @@ vars:
 # using the `{{ config(...) }}` macro.
 models:
   fdbt:
-    config:
-      +faker_rows: 5000
+

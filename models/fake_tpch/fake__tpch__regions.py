@@ -16,9 +16,8 @@ def model(dbt, session):
             "N_NATIONKEY":fake.country(),
             "R_REGIONKEY":fake.country(),
             "R_NAME":fake.country(),
-            "R_COMMENT":fake.paragraph(nb_sentences=5)
-            }]
+            "R_COMMENT":fake.paragraph(nb_sentences=5) 
+            } for x in range(num)]
         return output
-    #return pandas.DataFrame(create_rows(dbt.config.get("faker_rows")))
     return pandas.DataFrame(create_rows(5000))
 
