@@ -7,6 +7,7 @@
 
 {%- set columns = adapter.get_columns_in_relation(source_relation) -%}
 {% set column_names=columns | map(attribute='name') %}
+
 {% set fake_model_py %}
 
 import pandas as pd
