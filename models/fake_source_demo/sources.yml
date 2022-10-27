@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: erp
+    database: my_db
+
+    tables:
+      - name: orders
+      - name: order_items
