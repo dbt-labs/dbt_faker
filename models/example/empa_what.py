@@ -1,15 +1,16 @@
 import faker
 import pandas
+from snowflake.snowpark import Row
 
 
-def create_rows(table_name, num=1, **kwargs):
+def create_rows(dbt, session, table_name, num=1, **kwargs):
     fake = faker.Faker()
 
-    df = pandas.DataFrame([
-        {
+    df = session.create_dataframe([
+        Row(**{
             key: getattr(fake, value)()
             for key, value in kwargs.items()
-        } for x in range(num)
+        }) for x in range(num)
     ])
 
     df.write.mode("overwrite").save_as_table(
@@ -26,6 +27,8 @@ def model(dbt, session):
     )
 
     create_rows(
+        dbt,
+        session,
         table_name='regions',
         num=5000,
         N_NATIONKEY='country',
@@ -35,6 +38,8 @@ def model(dbt, session):
     )
 
     create_rows(
+        dbt,
+        session,
         table_name='customers',
         num=5000,
         C_CUSTKEY='pyint',
@@ -48,6 +53,8 @@ def model(dbt, session):
     )
 
     create_rows(
+        dbt,
+        session,
         table_name='nations',
         num=5000,
         N_NAME='country',
