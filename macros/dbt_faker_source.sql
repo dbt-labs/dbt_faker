@@ -26,11 +26,11 @@
           {% set db_name = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].database %}
           {% set schema_name = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].schema %}
           {% set fake_table_name = 'fake__' ~ source_name ~ '__' ~ table_name %}
-          {% set fully_qualified_fake_table_name = db_name ~ '.' ~ schema_name ~ '.' ~ fake_table_name %}
+          {% set fully_qualified_fake_table_name = target.database ~ '.' ~ target.schema ~ '.' ~ fake_table_name %}
 
           {%- set source_relation = adapter.get_relation(
-                database=db_name,
-                schema=schema_name,
+                database=target.database,
+                schema=target.schema,
                 identifier=fake_table_name,
           ) -%}
 
