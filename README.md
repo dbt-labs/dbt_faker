@@ -8,7 +8,7 @@ Include in `packages.yml`:
 
 ```yaml
 packages:
-  - git: "https://github.com/dbt-labs/dbt_faker.git" # git URL
+  - git: "https://github.com/dbt-labs/dbt_faker.git"
     revision: main 
 ```
 
@@ -16,7 +16,9 @@ packages:
 - dbt version >= 1.3
 
 ## How to use it 
-### 1. Declare your sources.yml, including columns, and add the meta config `faker_enabled:true` 
+### 1. Declare your sources.yml
+including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true` 
+
 ```yaml
 sources:
   - name: tpch
@@ -37,11 +39,23 @@ sources:
               faker_provider: date
 ```
 
-### 2. Generate your python model by executing the command `dbt run-operation generate_faker_model`
+### 2. Generate your python model 
+Execute the command `dbt run-operation generate_faker_model`
 
-### 3. Copy the output of your terminal and create a python model (e.g. dbt_faker.py) with the code generated from step #1
+### 3. Copy the output of your terminal and create a python model 
+Create a file (e.g. dbt_faker.py) with the code generated from step #2
 
-### 4. Execute your newly created python model `dbt run -m dbt_faker.py`
+### 4. Execute your newly created python model
+For example `dbt run -m dbt_faker.py`
+
+## Providers
+dbt_faker relies on [Faker's](https://faker.readthedocs.io/en/master/) robust data providers. In order to use them, simply include the name of the provider in the `faker_provider` meta tag. A full list of providers is [here]([url](https://faker.readthedocs.io/en/master/providers.html)). Some examples you can use:
+
+- [faker_provider.address](https://faker.readthedocs.io/en/master/providers/faker.providers.address.html) (48764 Howard Forge Apt. 421 Vanessaside, PA 19763)
+- [faker_provider.name](https://faker.readthedocs.io/en/master/providers/faker.providers.person.html) ( Diego Maradona)
+- [faker_provider.pyint](https://faker.readthedocs.io/en/master/providers/faker.providers.python.html) (1234)
+
+
 
 ## FAQ
 
