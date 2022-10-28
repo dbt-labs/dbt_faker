@@ -34,11 +34,13 @@
 
         {%- set columns = source_table.columns -%}
         {% set column_names=columns %}
+        {% set unique_id=source_table['unique_id'] %}
 
         create_rows(
         dbt,
         session,
-        table_name={{ source_table['unique_id'] }},
+        source_name='{{ unique_id.split(".")[-2]  }}',
+        table_name='{{ unique_id.split(".")[-1]  }}',
         num=5000,
         {%- for column in column_names  %}
         {%- set def_fake_provider=column_names[column]['meta'].faker_provider %}
