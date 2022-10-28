@@ -1,13 +1,13 @@
-{% macro fetch_configured_sources(sources=none) %}
-	{{ return(adapter.dispatch("fetch_configured_sources", "dbt_meta_testing")( sources)) }}
+{% macro fetch_configured_sources(source_name=none, list_of_source_tables=none) %}
+	{{ return(adapter.dispatch("fetch_configured_sources", "dbt_meta_testing")(source_name, list_of_source_tables)) }}
 {% endmacro %}
 
-{% macro default__fetch_configured_sources( sources) %}
-    
+{% macro default__fetch_configured_sources(source_name=none, list_of_source_tables=none) %}
+
     {% set resource_type="source" %}
     {% set configured_sources = [] %}
 
-    {{ dbt_meta_testing.logger("var `sources` is: " ~ sources) }}
+    {{ dbt_meta_testing.logger("var `sources` is: " ~ source_name) }}
 
     {% for node in graph.sources.values() | selectattr("resource_type", "equalto", resource_type) %}
 
@@ -25,11 +25,11 @@
 
     See documentation here for more details: https://github.com/tnightengale/quality-assurance-dbt.
     */
-    {% if sources is not none and resource_type == 'source' %}
+    {% if source_name is not none and resource_type == 'source' %}
 
         {% set filtered_sources_list = [] %}
         {% set final_sources_list = [] %}
-        {% set sources_list = sources.split(" ") %}
+        {% set sources_list = list_of_source_tables.split(" ") %}
 
         {{ dbt_meta_testing.logger("Building `filtered_sources_list`:") }}
         {% for m in sources_list %}
@@ -41,6 +41,7 @@
             */
             {# {% if "." in m %} {% set m = m.split(".")[-1] %} {% endif %} #}
 
+            {% set m = "source." + project_name + "." + source_name + "." + m %}
             {% do filtered_sources_list.append(m) %}
             {{ dbt_meta_testing.logger("Appended to `filtered_sources_list`: " ~ m) }}
 

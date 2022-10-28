@@ -1,6 +1,6 @@
-{% macro generate_faker_model(source_name, table_name) %}
+{% macro generate_faker_model(source_name=none, list_of_source_tables=none) %}
 
-{% set final_sources_list=fetch_configured_sources('source.fdbt.tpch.orders') %}
+{% set final_list=fetch_configured_sources(source_name, list_of_source_tables) %}
 
 {# here we would need to read from yml instead?? #}
 {# This relation is not being used atm #}
@@ -17,7 +17,7 @@
             packages=['pandas','faker'] 
         )
 
-    {% for source_table in final_sources_list %}
+    {% for source_table in final_list %}
 
         {%- set columns = source_table.columns -%}
         {% set column_names=columns %}
