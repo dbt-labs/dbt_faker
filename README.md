@@ -1,5 +1,5 @@
 # dbt faker 
-This [dbt](https://docs.getdbt.com/docs/introduction) package contains macros to create a python model that will generate fake data to use as sources
+Generate fake/test/demo/sample data directly from dbt. dbt_faker is a python model generator for generating data within a [dbt](https://docs.getdbt.com/docs/introduction) project using the Python [Faker](https://faker.readthedocs.io/en/master/) project. 
 
 ![Welcome to the dbt faker project!](https://i.imgflip.com/4cfh9t.jpg)
 
@@ -8,44 +8,56 @@ Include in `packages.yml`:
 
 ```yaml
 packages:
-  - package: 
-    version: 
+  - git: "https://github.com/dbt-labs/dbt_faker.git"
+    revision: main 
 ```
 
 ### Requirements 
 - dbt version >= 1.3
 
 ## How to use it 
-### 1. Declare your sources.yml, including columns, and add the meta config `faker_enabled:true` 
+### 1. Declare your sources.yml
+including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true` 
+
 ```yaml
 sources:
   - name: tpch
-    description: Welcome to the dbt Labs demo dbt project! 
     meta:
       faker_enabled: true
   - name: fake_tpch
     tables:
       - name: orders
-        description: main order tracking table
-
         meta:
-          faker_enabled: false
+          faker_enabled: true
+          faker_rows: 250
         columns:
           - name: o_orderkey
-            description: SF*1,500,000 are sparsely populated
-            tests: 
-              - unique
-              - not_null
+            meta:
+            faker_provider: pyint
 
-          - name: o_custkey
-            description: Foreign Key to C_CUSTKEY
+          - name: o_order_date
+            meta:
+              faker_provider: date
 ```
 
-### 2. Generate your python model by executing the command `dbt run-operation generate_faker_model`
 
-### 3. Copy the output of your terminal and create a python model with the code generate_faker_model
+### 2. Generate your python model 
+Execute the command `dbt run-operation generate_faker_model`
 
-### 4. Execute your newly created python model `dbt run -m dbt_faker.py`
+### 3. Copy the output of your terminal and create a python model 
+Create a file (e.g. dbt_faker.py) with the code generated from step #2
+
+### 4. Execute your newly created python model
+For example `dbt run -m dbt_faker.py`
+
+## Providers
+dbt_faker relies on [Faker's](https://faker.readthedocs.io/en/master/) robust data providers. In order to use them, simply include the name of the provider in the `faker_provider` meta tag. A full list of providers is [here]([url](https://faker.readthedocs.io/en/master/providers.html)). Some examples you can use:
+
+- [faker_provider.address](https://faker.readthedocs.io/en/master/providers/faker.providers.address.html) (48764 Howard Forge Apt. 421 Vanessaside, PA 19763)
+- [faker_provider.name](https://faker.readthedocs.io/en/master/providers/faker.providers.person.html) ( Diego Maradona)
+- [faker_provider.pyint](https://faker.readthedocs.io/en/master/providers/faker.providers.python.html) (1234)
+
+
 
 ## FAQ
 

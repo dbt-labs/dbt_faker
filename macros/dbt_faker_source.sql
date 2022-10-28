@@ -1,24 +1,24 @@
-{% macro is_truthy(value) %}
-  {{ return((value | lower) == 'true') }}
+{% macro dbt_faker_source(source_name, table_name) -%}
+  {{ return(adapter.dispatch('dbt_faker_source', 'dbt_faker')(source_name, table_name)) }}
 {% endmacro %}
 
-{% macro source(source_name, table_name) -%}
+{% macro default__dbt_faker_source(source_name, table_name) -%}
   {% do log("dbt_faker has intercepted the source call! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
   {# When faker_enabled is true, then route queries to the faked table #}
-  {%- if is_truthy(var('faker_enabled', 'false')) -%}
+  {%- if (var('faker_enabled', 'false') | lower) == 'true' -%}
     {% do log("dbt_faker is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
     {# Only on execution #}
     {% if execute %}
       {% set is_source_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].source_meta.faker_enabled %}
 
-      {% if is_truthy(is_source_enabled) %}
+      {% if (is_source_enabled | lower) == 'true' %}
         {% do log("dbt_faker: source is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
         {% set is_source_table_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].meta.faker_enabled %}
 
-        {% if is_truthy(is_source_table_enabled) %}
+        {% if (is_source_table_enabled | lower) == 'true' %}
           {% do log("dbt_faker: source table is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
           {% set db_name = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].database %}
