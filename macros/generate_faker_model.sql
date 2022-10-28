@@ -25,7 +25,7 @@
         create_rows(
         dbt,
         session,
-        table_name=source_table['unique_id'],
+        table_name={{ source_table['unique_id'] }},
         num=100,
         {%- for column in column_names  %}
         {{ column_names[column]['name'] | upper }}{{ "='" ~ column_names[column]['meta'].provider ~ "'" }}{{"," if not loop.last}}
