@@ -30,8 +30,6 @@ vars:
 ```
 ### 2. Declare your sources.yml
 including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true`. 
-For each column, you can define a meta field called faker_provider that will indicate the type of data you want to generate. By default, dbt faker will generate a string. 
-All available providers can be found in the python faker library documentation [here](https://faker.readthedocs.io/en/master/providers.htmlAs). 
 
 ```yaml
 sources:
@@ -74,6 +72,8 @@ dbt_faker relies on [Faker's](https://faker.readthedocs.io/en/master/) robust da
 - [faker_provider.name](https://faker.readthedocs.io/en/master/providers/faker.providers.person.html) ( Diego Maradona)
 - [faker_provider.pyint](https://faker.readthedocs.io/en/master/providers/faker.providers.python.html) (1234)
 
+
+If a fake_provider has not been defined for a column, dbt faker will generate a string by default. 
 
 
 ## FAQ
