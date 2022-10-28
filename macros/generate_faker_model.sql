@@ -2,19 +2,32 @@
 
 {% set final_list=fetch_configured_sources() %}
 
-{# here we would need to read from yml instead?? #}
-{# This relation is not being used atm #}
-
     {% set fake_model_py %}
 
-    import pandas as pd
     import faker
+    import pandas
+    from snowflake.snowpark import Row
 
-    def model( dbt, session ):
-        
+
+    def create_rows(dbt, session, source_name, table_name, num=1, **kwargs):
+        fake = faker.Faker()
+
+        df = session.create_dataframe([
+            Row(**{
+                key: getattr(fake, value)()
+                for key, value in kwargs.items()
+            }) for x in range(num)
+        ])
+
+        df.write.mode("overwrite").save_as_table(
+            f"{dbt.this.database}.{dbt.this.schema}.fake__{source_name}__{table_name}",
+            create_temp_table=False,
+        )
+
+    def model(dbt, session):
         dbt.config(
-            materialized="table",
-            packages=['pandas','faker'] 
+        materialized="table", 
+        packages=["faker", "pandas"],
         )
 
     {% for source_table in final_list %}
@@ -26,18 +39,21 @@
         dbt,
         session,
         table_name={{ source_table['unique_id'] }},
-        num=100,
+        num=5000,
         {%- for column in column_names  %}
-        {{ column_names[column]['name'] | upper }}{{ "='" ~ column_names[column]['meta'].fake_provider ~ "'" }}{{"," if not loop.last}}
+        {%- set def_fake_provider=column_names[column]['meta'].fake_provider %}
+        {%- if (def_fake_provider|length) == 0 %}
+            {%- set def_fake_provider='pystr' %}
+        {%- endif %}
+        {{ column_names[column]['name'] | upper }}{{ "='" ~ def_fake_provider ~ "'" }}{{"," if not loop.last}}
         {%- endfor %}
         )
 
     {% endfor %}
     
-        df = pd.DataFrame(data) 
-        df.columns = df.columns.str.lower()
-        
-        return df
+    df = session.create_dataframe(['yes']).to_df("are_we_faking")
+
+    return df
 
     {% endset %}
 

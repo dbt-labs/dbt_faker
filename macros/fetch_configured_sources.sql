@@ -24,7 +24,7 @@
                             'columns': node.columns
                         }
                     ) %}
-                {% do log("dbt_faker appended to `configured_sources`: " ~ node, info=True) %}
+                {% do log("dbt_faker appended to `configured_sources`: " ~ node['unique_id'], info=True) %}
 
         {% endif %}
 
@@ -33,7 +33,7 @@
     {% endfor %}
 
 
-    {% do log("dbt_faker will fake these sources: `final_sources_list` is: " ~ configured_sources, info=True) %}
+    {% do log("dbt_faker has some sources to fake!", info=True) %}
     {{ return(configured_sources) }}
 
 {% endmacro %}
