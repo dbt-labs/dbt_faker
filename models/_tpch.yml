@@ -28,6 +28,8 @@ sources:
                   field: c_custkey
           - name: o_orderstatus
             description: status code of the order
+            meta:
+              provider: address
           - name: o_totalprice
             description: raw price
           - name: o_orderdate
