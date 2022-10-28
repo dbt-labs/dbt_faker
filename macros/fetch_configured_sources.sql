@@ -1,5 +1,5 @@
 {% macro fetch_configured_sources() %}
-	{{ return(adapter.dispatch("fetch_configured_sources", "dbt_meta_testing")()) }}
+	{{ return(adapter.dispatch("fetch_configured_sources", "dbt_faker")()) }}
 {% endmacro %}
 
 {% macro default__fetch_configured_sources() %}
@@ -24,16 +24,16 @@
                             'columns': node.columns
                         }
                     ) %}
-                
-                {{ dbt_meta_testing.logger("Appended to `configured_sources`: " ~ node) }}
+                {% do log("Appended to `configured_sources`: " ~ node, info=True) %}
+
         {% endif %}
 
         {% endif %}
 
     {% endfor %}
 
-   
-    {{ dbt_meta_testing.logger("`final_sources_list` is: " ~ configured_sources) }}
+
+    {% do log("`final_sources_list` is: " ~ configured_sources, info=True) %}
     {{ return(configured_sources) }}
 
 {% endmacro %}
