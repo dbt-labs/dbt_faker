@@ -1,6 +1,6 @@
-{% macro generate_faker_model(source_name=none, list_of_source_tables=none) %}
+{% macro generate_faker_model() %}
 
-{% set final_list=fetch_configured_sources(source_name, list_of_source_tables) %}
+{% set final_list=fetch_configured_sources() %}
 
 {# here we would need to read from yml instead?? #}
 {# This relation is not being used atm #}
