@@ -11,18 +11,20 @@
 
     {# Only on execution #}
     {% if execute %}
-      {% set is_source_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].source_meta.faker_enabled %}
+
+      
+      {% set is_source_enabled = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].source_meta.faker_enabled %}
 
       {% if (is_source_enabled | lower) == 'true' %}
         {% do log("dbt_faker: source is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
-        {% set is_source_table_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].meta.faker_enabled %}
+        {% set is_source_table_enabled = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].meta.faker_enabled %}
 
         {% if (is_source_table_enabled | lower) == 'true' %}
           {% do log("dbt_faker: source table is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
-          {% set db_name = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].database %}
-          {% set schema_name = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].schema %}
+          {% set db_name = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].database %}
+          {% set schema_name = graph.sources['source.' ~ project_name ~ '.' ~ source_name ~ '.' ~ table_name].schema %}
           {% set fake_table_name = 'fake__' ~ source_name ~ '__' ~ table_name %}
           {% set fully_qualified_fake_table_name = db_name ~ '.' ~ schema_name ~ '.' ~ fake_table_name %}
 
