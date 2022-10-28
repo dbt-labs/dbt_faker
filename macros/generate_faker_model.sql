@@ -41,7 +41,7 @@
         table_name={{ source_table['unique_id'] }},
         num=5000,
         {%- for column in column_names  %}
-        {%- set def_fake_provider=column_names[column]['meta'].fake_provider %}
+        {%- set def_fake_provider=column_names[column]['meta'].faker_provider %}
         {%- if (def_fake_provider|length) == 0 %}
             {%- set def_fake_provider='pystr' %}
         {%- endif %}
