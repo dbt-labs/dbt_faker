@@ -55,7 +55,7 @@ Create the file `macro/dbt_faker_source_override.sql` that looks like this:
 {% endmacro %}
 ```
 
-### 4. Execute your newly created python model
+### 5. Execute your newly created python model
 For example `dbt run -m dbt_faker.py`
 
 ## Providers
