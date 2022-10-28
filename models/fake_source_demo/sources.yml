@@ -3,7 +3,13 @@ version: 2
 sources:
   - name: erp
     database: my_db
+    meta:
+      faker_enabled: true
 
     tables:
       - name: orders
+        meta:
+          faker_enabled: true
       - name: order_items
+        meta:
+          faker_enabled: false
