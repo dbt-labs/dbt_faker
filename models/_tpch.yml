@@ -12,6 +12,8 @@ sources:
     meta:
       faker_enabled: true
   - name: fake_tpch
+    meta:
+      faker_enabled: true
     tables:
       - name: orders
         meta:
