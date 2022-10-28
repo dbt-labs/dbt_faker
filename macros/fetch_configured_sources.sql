@@ -12,8 +12,10 @@
         {# Retrieve sources whose meta faker is:
             - enabled the source level 
             - not disabled at the table level 
+           or
+           - enabled the source table level 
         #}
-         {% if (node.source_meta.faker_enabled == True and node.meta.faker_enabled != False ) %} 
+         {% if (node.source_meta.faker_enabled == True and node.meta.faker_enabled != False) or node.meta.faker_enabled == True  %} 
 
           {# if the model has no columns then nothing to fake --> skip #}
           {% if node.columns != {} %}
