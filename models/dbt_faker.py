@@ -3,7 +3,7 @@ import pandas
 from snowflake.snowpark import Row
 
 
-def create_rows(dbt, session, table_name, num=1, **kwargs):
+def create_rows(dbt, session, source_name, table_name, num=1, **kwargs):
     fake = faker.Faker()
 
     df = session.create_dataframe([
@@ -14,7 +14,7 @@ def create_rows(dbt, session, table_name, num=1, **kwargs):
     ])
 
     df.write.mode("overwrite").save_as_table(
-        dbt.this.database + '.' + dbt.this.schema + '.' + table_name,
+        f"{dbt.this.database}.{dbt.this.schema}.fake__{source_name}__{table_name}",
         create_temp_table=False,
     )
 
@@ -29,6 +29,7 @@ def model(dbt, session):
     create_rows(
         dbt,
         session,
+        source_name='tpch',
         table_name='regions',
         num=5000,
         N_NATIONKEY='country',
@@ -40,6 +41,7 @@ def model(dbt, session):
     create_rows(
         dbt,
         session,
+        source_name='tpch',
         table_name='customers',
         num=5000,
         C_CUSTKEY='pyint',
@@ -55,6 +57,7 @@ def model(dbt, session):
     create_rows(
         dbt,
         session,
+        source_name='tpch',
         table_name='nations',
         num=5000,
         N_NAME='country',
