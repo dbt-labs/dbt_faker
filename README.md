@@ -45,7 +45,15 @@ sources:
 
 ### 3. Copy the output of your terminal and create a python model with the code generate_faker_model
 
-### 4. Execute your newly created python model `dbt run -m dbt_faker.py`
+### 4. Add a macro in your project at `macro/dbt_faker_source_override.sql` that looks like this:
+
+```
+{% macro source(source_name, table_name) %}
+{{ return(dbt_faker_source(source_name, table_name)) }}
+{% endmacro %}
+```
+
+### 5. Execute your newly created python model `dbt run -m dbt_faker.py`
 
 ## FAQ
 
