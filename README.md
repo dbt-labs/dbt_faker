@@ -51,11 +51,16 @@ Create a file (e.g. dbt_faker.py) with the code generated from step #2
 Create the file `macro/dbt_faker_source_override.sql` that looks like this:
 ```
 {% macro source(source_name, table_name) %}
-{{ return(dbt_faker_source(source_name, table_name)) }}
+{{ return(dbt_faker.dbt_faker_source(source_name, table_name)) }}
 {% endmacro %}
 ```
+Activate the faker_enabled variable in your project.yml 
+```
+vars: 
+  faker_enabled: true
+```
 
-### 4. Execute your newly created python model
+### 5. Execute your newly created python model
 For example `dbt run -m dbt_faker.py`
 
 ## Providers
