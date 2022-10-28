@@ -26,6 +26,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   faker_enabled: true
+  logging_level: INFO
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -35,7 +36,3 @@ vars:
 # using the `{{ config(...) }}` macro.
 models:
   fdbt:
-
-# Configured for the dbt_meta_testing.logger macro.
-vars:
-    logging_level: INFO
