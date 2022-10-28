@@ -2,7 +2,7 @@
   {{ return((value | lower) == 'true') }}
 {% endmacro %}
 
-{% macro source(source_name, table_name) -%}
+{% macro dbt_faker_source(source_name, table_name) -%}
   {% do log("dbt_faker has intercepted the source call! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
   {# When faker_enabled is true, then route queries to the faked table #}
