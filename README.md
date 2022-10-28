@@ -51,7 +51,7 @@ Create a file (e.g. dbt_faker.py) with the code generated from step #2
 Create the file `macro/dbt_faker_source_override.sql` that looks like this:
 ```
 {% macro source(source_name, table_name) %}
-{{ return(dbt_faker_source(source_name, table_name)) }}
+{{ return(dbt_faker.dbt_faker_source(source_name, table_name)) }}
 {% endmacro %}
 ```
 Activate the faker_enabled variable in your project.yml 
