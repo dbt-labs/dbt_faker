@@ -36,3 +36,6 @@ vars:
 models:
   fdbt:
 
+# Configured for the dbt_meta_testing.logger macro.
+vars:
+    logging_level: INFO
