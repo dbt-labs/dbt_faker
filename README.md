@@ -1,8 +1,7 @@
-
-![Welcome to the dbt faker project!](https://i.imgflip.com/4cfh9t.jpg)
-
 # dbt faker 
 This [dbt](https://docs.getdbt.com/docs/introduction) package contains macros to create a python model that will generate fake data to use as sources
+
+![Welcome to the dbt faker project!](https://i.imgflip.com/4cfh9t.jpg)
 
 ## Install
 Include in `packages.yml`:
