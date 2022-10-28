@@ -39,7 +39,12 @@
         dbt,
         session,
         table_name={{ source_table['unique_id'] }},
-        num=5000,
+        {%- if source_table['meta'].faker_rows %}
+            {%- set def_fake_rows=source_table['meta'].faker_rows %}
+        {% else %}
+            {%- set def_fake_rows=100 %}
+        {%- endif %}        
+        num={{ def_fake_rows }},
         {%- for column in column_names  %}
         {%- set def_fake_provider=column_names[column]['meta'].faker_provider %}
         {%- if (def_fake_provider|length) == 0 %}
