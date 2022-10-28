@@ -1,5 +1,5 @@
 # dbt faker 
-This [dbt](https://docs.getdbt.com/docs/introduction) package contains macros to create a python model that will generate fake data to use as sources
+Generate fake/test/demo/sample data directly from dbt. dbt_faker is a python model generator for generating data within a [dbt](https://docs.getdbt.com/docs/introduction) project using the Python [Faker](https://faker.readthedocs.io/en/master/) project. 
 
 ![Welcome to the dbt faker project!](https://i.imgflip.com/4cfh9t.jpg)
 
@@ -8,8 +8,8 @@ Include in `packages.yml`:
 
 ```yaml
 packages:
-  - package: 
-    version: 
+  - git: "https://github.com/dbt-labs/dbt_faker.git" # git URL
+    revision: main 
 ```
 
 ### Requirements 
@@ -20,40 +20,28 @@ packages:
 ```yaml
 sources:
   - name: tpch
-    description: Welcome to the dbt Labs demo dbt project! 
     meta:
       faker_enabled: true
   - name: fake_tpch
     tables:
       - name: orders
-        description: main order tracking table
-
         meta:
-          faker_enabled: false
+          faker_enabled: true
         columns:
           - name: o_orderkey
-            description: SF*1,500,000 are sparsely populated
-            tests: 
-              - unique
-              - not_null
+            meta:
+            faker_provider: pyint
 
-          - name: o_custkey
-            description: Foreign Key to C_CUSTKEY
+          - name: o_order_date
+            meta:
+              faker_provider: date
 ```
 
 ### 2. Generate your python model by executing the command `dbt run-operation generate_faker_model`
 
-### 3. Copy the output of your terminal and create a python model with the code generate_faker_model
+### 3. Copy the output of your terminal and create a python model (e.g. dbt_faker.py) with the code generated from step #1
 
-### 4. Add a macro in your project at `macro/dbt_faker_source_override.sql` that looks like this:
-
-```
-{% macro source(source_name, table_name) %}
-{{ return(dbt_faker_source(source_name, table_name)) }}
-{% endmacro %}
-```
-
-### 5. Execute your newly created python model `dbt run -m dbt_faker.py`
+### 4. Execute your newly created python model `dbt run -m dbt_faker.py`
 
 ## FAQ
 
