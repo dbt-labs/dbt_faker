@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'fdbt'
+name: 'dbt_faker'
 version: '1.0.0'
 config-version: 2
 
@@ -25,7 +25,8 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 vars:
-  faker_rows: 5000
+  faker_enabled: true
+  logging_level: INFO
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -35,7 +36,3 @@ vars:
 # using the `{{ config(...) }}` macro.
 models:
   fdbt:
-
-# Configured for the dbt_meta_testing.logger macro.
-vars:
-    logging_level: INFO
