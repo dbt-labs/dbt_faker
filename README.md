@@ -29,6 +29,7 @@ sources:
       - name: orders
         meta:
           faker_enabled: true
+          faker_rows: 250
         columns:
           - name: o_orderkey
             meta:
@@ -38,6 +39,7 @@ sources:
             meta:
               faker_provider: date
 ```
+
 
 ### 2. Generate your python model 
 Execute the command `dbt run-operation generate_faker_model`
