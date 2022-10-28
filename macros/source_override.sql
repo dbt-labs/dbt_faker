@@ -3,24 +3,23 @@
 {% endmacro %}
 
 {% macro source(source_name, table_name) -%}
-
-  {{ dbt_meta_testing.logger("dbt_faker has intercepted the source call! " ~ source_name ~ ", " ~ table_name) }}
+  {% do log("dbt_faker has intercepted the source call! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
   {# When faker_enabled is true, then route queries to the faked table #}
   {%- if is_truthy(var('faker_enabled', 'false')) -%}
-    {{ dbt_meta_testing.logger("dbt_faker is enabled! " ~ source_name ~ ", " ~ table_name) }}
+    {% do log("dbt_faker is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
     {# Only on execution #}
     {% if execute %}
-      {{ dbt_meta_testing.logger("dbt_faker: execute enabled! " ~ source_name ~ ", " ~ table_name) }}
       {% set is_source_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].source_meta.faker_enabled %}
 
       {% if is_truthy(is_source_enabled) %}
-        {{ dbt_meta_testing.logger("dbt_faker: source is enabled! " ~ source_name ~ ", " ~ table_name) }}
+        {% do log("dbt_faker: source is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
+
         {% set is_source_table_enabled = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].meta.faker_enabled %}
 
         {% if is_truthy(is_source_table_enabled) %}
-          {{ dbt_meta_testing.logger("dbt_faker: source table is enabled! " ~ source_name ~ ", " ~ table_name) }}
+          {% do log("dbt_faker: source table is enabled! " ~ source_name ~ ", " ~ table_name, info=True) %}
 
           {% set db_name = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].database %}
           {% set schema_name = graph.sources['source.fdbt.' ~ source_name ~ '.' ~ table_name].schema %}
@@ -36,18 +35,21 @@
           {% set fake_table_exists = source_relation is not none %}
 
           {% if fake_table_exists %}
-            {{ dbt_meta_testing.logger("dbt_faker: fake table exists! " ~ source_name ~ ", " ~ table_name) }}
+            {% do log("dbt_faker: fake table exists! " ~ source_name ~ ", " ~ table_name, info=True) %}
             {{ return(fully_qualified_fake_table_name) }}
           {% else %}
-            {{ dbt_meta_testing.logger("Tried to use fake table " ~ fully_qualified_fake_table_name ~ ", but it doesn't exist! Defaulting to the actual source.") }}
+
+            {% do log("Tried to use fake table " ~ fully_qualified_fake_table_name ~ ", but it doesn't exist! Defaulting to the actual source.", info=True) %}
           {% endif %}
         {% endif %}
       {% endif %}
     {% else %}
-      {{ dbt_meta_testing.logger("dbt_faker: here! " ~ source_name ~ ", " ~ table_name) }}
+      {% do log("dbt_faker: here! " ~ source_name ~ ", " ~ table_name, info=True) %}
+
     {%- endif -%}
   {% else %}
-    {{ dbt_meta_testing.logger("dbt_faker: execute DISABLED! " ~ source_name ~ ", " ~ table_name) }}
+    {% do log("dbt_faker: execute DISABLED! " ~ source_name ~ ", " ~ table_name, info=True) %}
+
   {%- endif -%}
 
   {{ return(builtins.source(source_name, table_name)) }}
