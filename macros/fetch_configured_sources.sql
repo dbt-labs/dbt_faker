@@ -14,15 +14,19 @@
             - not disabled at the table level 
         #}
          {% if (node.source_meta.faker_enabled == True and node.meta.faker_enabled != False ) %} 
-          {% do configured_sources.append(
-                    {
-                        'unique_id': node['unique_id'],
-                        'columns': node.columns
-                    }
-                ) %}
-            
-            {{ dbt_meta_testing.logger("Appended to `configured_sources`: " ~ node) }}
 
+          {# if the model has no columns then nothing to fake --> skip #}
+          {% if node.columns != {} %}
+          
+            {% do configured_sources.append(
+                        {
+                            'unique_id': node['unique_id'],
+                            'columns': node.columns
+                        }
+                    ) %}
+                
+                {{ dbt_meta_testing.logger("Appended to `configured_sources`: " ~ node) }}
+        {% endif %}
 
         {% endif %}
 
