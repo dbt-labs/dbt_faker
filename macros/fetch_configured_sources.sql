@@ -54,7 +54,12 @@
             {{ dbt_meta_testing.logger("`filtered_sources_loop: " ~ loop.index ~ " " ~ m.name in filtered_sources_list)}}
             {% if m.unique_id in filtered_sources_list %}
 
-                {% do final_sources_list.append(m) %}
+                {% do final_sources_list.append(
+                    {
+                        'unique_id': m['unique_id'],
+                        'columns': m.columns
+                    }
+                ) %}
                 {{ dbt_meta_testing.logger("m is: " ~ m) }}
             
             {% endif %}
