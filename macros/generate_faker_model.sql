@@ -51,9 +51,9 @@
 
     {% endfor %}
     
-    df = session.create_dataframe(['yes']).to_df("are_we_faking")
+        df = session.create_dataframe(['yes']).to_df("are_we_faking")
 
-    return df
+        return df
 
     {% endset %}
 
