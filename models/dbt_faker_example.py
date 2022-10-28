@@ -24,6 +24,7 @@ def model(dbt, session):
     dbt.config(
         materialized="table", 
         packages=["faker", "pandas"],
+        enabled = false
     )
 
     create_rows(
