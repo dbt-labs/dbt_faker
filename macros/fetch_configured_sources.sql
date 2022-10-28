@@ -1,5 +1,5 @@
 {% macro fetch_configured_sources() %}
-	{{ return(adapter.dispatch("fetch_configured_sources", "dbt_faker")()) }}
+	{{ return(adapter.dispatch("fetch_configured_sources")()) }}
 {% endmacro %}
 
 {% macro default__fetch_configured_sources() %}
@@ -24,7 +24,7 @@
                             'columns': node.columns
                         }
                     ) %}
-                {% do log("Appended to `configured_sources`: " ~ node, info=True) %}
+                {% do log("dbt_faker appended to `configured_sources`: " ~ node, info=True) %}
 
         {% endif %}
 
@@ -33,7 +33,7 @@
     {% endfor %}
 
 
-    {% do log("`final_sources_list` is: " ~ configured_sources, info=True) %}
+    {% do log("dbt_faker will fake these sources: `final_sources_list` is: " ~ configured_sources, info=True) %}
     {{ return(configured_sources) }}
 
 {% endmacro %}
