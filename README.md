@@ -32,6 +32,8 @@ vars:
 including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true`. 
 
 ```yaml
+version: 2
+
 sources:
   - name: tpch
     meta:
@@ -45,7 +47,7 @@ sources:
         columns:
           - name: o_orderkey
             meta:
-            faker_provider: pyint
+             faker_provider: pyint
 
           - name: o_order_date
             meta:

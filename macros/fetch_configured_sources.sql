@@ -1,5 +1,5 @@
 {% macro fetch_configured_sources() %}
-	{{ return(adapter.dispatch("fetch_configured_sources")()) }}
+	{{ return(adapter.dispatch("fetch_configured_sources","dbt_faker")()) }}
 {% endmacro %}
 
 {% macro default__fetch_configured_sources() %}
