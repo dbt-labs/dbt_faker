@@ -61,7 +61,7 @@
 
     {% if execute %}
 
-    {{ log(fake_model_py, info=True) }}
+    {{ print(fake_model_py) }}
     {% do return(fake_model_py) %}
 
     {% endif %}
