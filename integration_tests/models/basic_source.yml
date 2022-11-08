@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: tpch
+    meta:
+      faker_enabled: true
+  - name: fake_tpch
+    tables:
+      - name: orders
+        meta:
+          faker_enabled: true
+          faker_rows: 250
+        columns:
+          - name: o_orderkey
+            meta:
+             faker_provider: pyint
+
+          - name: o_order_date
+            meta:
+              faker_provider: date
