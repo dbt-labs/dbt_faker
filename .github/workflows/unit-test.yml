@@ -8,9 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-    strategy:
-      fail-fast: false
     defaults:
       run:
         shell: bash
