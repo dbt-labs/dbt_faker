@@ -1,6 +1,6 @@
 {% macro generate_faker_model() %}
 
-{% set final_list=fetch_configured_sources() %}
+{% set final_list=dbt_faker.fetch_configured_sources() %}
 
     {% set fake_model_py %}
 
