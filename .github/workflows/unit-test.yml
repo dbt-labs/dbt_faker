@@ -20,7 +20,7 @@ jobs:
       - name: Install dbt
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          pip install --no-cache -r dbt-snowflake
+          pip install dbt-snowflake
       - name: Run unit tests
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
