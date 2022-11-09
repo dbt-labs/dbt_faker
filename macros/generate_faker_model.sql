@@ -39,11 +39,11 @@
         create_rows(
         dbt,
         session,
-        {%- if source_table['meta'].faker_rows %}
-            {%- set def_fake_rows=source_table['meta'].faker_rows %}
-        {% else %}
-            {%- set def_fake_rows=100 %}
-        {%- endif %}        
+        {%- if source_table['meta'].faker_rows -%}
+            {%- set def_fake_rows=source_table['meta'].faker_rows -%}
+        {%- else -%}
+            {%- set def_fake_rows=100 -%}
+        {%- endif -%}        
         num={{ def_fake_rows }},
         source_name='{{ unique_id.split(".")[-2]  }}',
         table_name='{{ unique_id.split(".")[-1]  }}',
