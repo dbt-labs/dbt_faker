@@ -30,8 +30,7 @@
         packages=["faker", "pandas"],
         )
 
-    {% for source_table in final_list %}
-
+    {%- for source_table in final_list -%}
         {%- set columns = source_table.columns -%}
         {% set column_names=columns %}
         {% set unique_id=source_table['unique_id'] %}
@@ -43,7 +42,7 @@
             {%- set def_fake_rows=source_table['meta'].faker_rows -%}
         {%- else -%}
             {%- set def_fake_rows=100 -%}
-        {%- endif -%}        
+        {%- endif %}        
         num={{ def_fake_rows }},
         source_name='{{ unique_id.split(".")[-2]  }}',
         table_name='{{ unique_id.split(".")[-1]  }}',
