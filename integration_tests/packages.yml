@@ -1,0 +1,4 @@
+packages:
+  - local: ../
+  - git: "https://github.com/ernestoongaro/dbt-unittest.git" #temp until PR is merged, then change to yu-iskw/dbt-unittest
+    revision: main
