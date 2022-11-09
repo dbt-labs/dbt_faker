@@ -16,10 +16,24 @@ packages:
 - dbt version >= 1.3
 
 ## How to use it 
-### 1. Declare your sources.yml
-including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true` 
+### 1. Add a source override macro in your project 
+Create the file `macro/dbt_faker_source_override.sql` that looks like this:
+```
+{% macro source(source_name, table_name) %}
+{{ return(dbt_faker.dbt_faker_source(source_name, table_name)) }}
+{% endmacro %}
+```
+Activate the faker_enabled variable in your project.yml 
+```
+vars: 
+  faker_enabled: true
+```
+### 2. Declare your sources.yml
+including columns and [faker_providers](#providers), and add the meta config `faker_enabled:true`. 
 
 ```yaml
+version: 2
+
 sources:
   - name: tpch
     meta:
@@ -33,7 +47,7 @@ sources:
         columns:
           - name: o_orderkey
             meta:
-            faker_provider: pyint
+             faker_provider: pyint
 
           - name: o_order_date
             meta:
@@ -41,14 +55,17 @@ sources:
 ```
 
 
-### 2. Generate your python model 
+### 3. Generate your python model 
 Execute the command `dbt run-operation generate_faker_model`
 
-### 3. Copy the output of your terminal and create a python model 
+### 4. Copy the output of your terminal and create a python model 
 Create a file (e.g. dbt_faker.py) with the code generated from step #2
 
-### 4. Execute your newly created python model
-For example `dbt run -m dbt_faker.py`
+### 5. Execute your newly created python model
+For example `dbt run -m dbt_faker.py`. This will create a table called fake__source_table for each source you have defined as fake-able
+
+### 6. Use your fake data! 
+Run the models depending on the fake sources and be amazed 
 
 ## Providers
 dbt_faker relies on [Faker's](https://faker.readthedocs.io/en/master/) robust data providers. In order to use them, simply include the name of the provider in the `faker_provider` meta tag. A full list of providers is [here]([url](https://faker.readthedocs.io/en/master/providers.html)). Some examples you can use:
@@ -57,6 +74,8 @@ dbt_faker relies on [Faker's](https://faker.readthedocs.io/en/master/) robust da
 - [faker_provider.name](https://faker.readthedocs.io/en/master/providers/faker.providers.person.html) ( Diego Maradona)
 - [faker_provider.pyint](https://faker.readthedocs.io/en/master/providers/faker.providers.python.html) (1234)
 
+
+If a fake_provider has not been defined for a column, dbt faker will generate a string by default. 
 
 
 ## FAQ
