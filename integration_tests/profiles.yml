@@ -1,6 +1,6 @@
-   default:
-     outputs:
-       dev:
+default:
+  outputs:
+    default:
        type: snowflake
        threads: 1
        account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
