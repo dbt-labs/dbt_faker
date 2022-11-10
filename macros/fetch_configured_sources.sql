@@ -23,6 +23,7 @@
             {% do configured_sources.append(
                         {
                             'unique_id': node['unique_id'],
+                            'meta': node.meta,
                             'columns': node.columns
                         }
                     ) %}
