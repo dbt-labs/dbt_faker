@@ -6,7 +6,7 @@ require-dbt-version: ">=1.3.0"
 config-version: 2
 
 # The "profile" dbt uses for this project.
-profile: 'default'
+profile: 'dbt_faker'
 
 # Configuration paths.
 macro-paths: ["macros"]

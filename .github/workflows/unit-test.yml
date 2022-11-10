@@ -36,5 +36,15 @@ jobs:
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           dbt run-operation test_macros
+      - name: Generate and Run Python Model
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          dbt --quiet run-operation generate_faker_model > models/python.txt
+          mv models/python.txt models/python.py
+          dbt run
+      - name: Run dbt Tests
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          dbt test
       - id: exit
         run: exit ${{ steps.apply.outputs.exitcode }}

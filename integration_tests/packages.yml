@@ -1,4 +1,4 @@
 packages:
   - local: ../
-  - git: "https://github.com/ernestoongaro/dbt-unittest.git" #temp until PR is merged, then change to yu-iskw/dbt-unittest
-    revision: main
+  - package: yu-iskw/dbt_unittest
+    version: 0.3.0
