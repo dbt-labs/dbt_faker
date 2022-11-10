@@ -30,8 +30,7 @@
         packages=["faker", "pandas"],
         )
 
-    {% for source_table in final_list %}
-
+    {%- for source_table in final_list -%}
         {%- set columns = source_table.columns -%}
         {% set column_names=columns %}
         {% set unique_id=source_table['unique_id'] %}
@@ -39,9 +38,15 @@
         create_rows(
         dbt,
         session,
+        {%- if source_table['meta'].faker_rows -%}
+            {%- set def_fake_rows=source_table['meta'].faker_rows -%}
+        {%- else -%}
+            {%- set def_fake_rows=100 -%}
+        {%- endif %}        
+        num={{ def_fake_rows }},
         source_name='{{ unique_id.split(".")[-2]  }}',
         table_name='{{ unique_id.split(".")[-1]  }}',
-        num=5000,
+
         {%- for column in column_names  %}
         {%- set def_fake_provider=column_names[column]['meta'].faker_provider %}
         {%- if (def_fake_provider|length) == 0 %}
