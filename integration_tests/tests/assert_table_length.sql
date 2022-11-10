@@ -1,0 +1,3 @@
+select count(*) from
+ANALYTICS.DBT_FAKER_INTEGRATION_TESTS.FAKE__FAKE_TPCH__ORDERS
+having count(*) != 250 

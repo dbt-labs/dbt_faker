@@ -1,7 +1,8 @@
 version: 2
-
 sources:
   - name: tpch
+    schema: dbt_faker_integration_tests
+    database: analytics
     meta:
       faker_enabled: true
   - name: fake_tpch
@@ -13,8 +14,8 @@ sources:
         columns:
           - name: o_orderkey
             meta:
-             faker_provider: pyint
-
+              faker_provider: pyint
           - name: o_order_date
             meta:
               faker_provider: date
+
