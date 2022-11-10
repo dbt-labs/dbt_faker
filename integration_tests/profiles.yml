@@ -1,0 +1,13 @@
+default:
+  outputs:
+    default:
+       type: snowflake
+       threads: 1
+       account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
+       user: "{{ env_var('DBT_SNOWFLAKE_USERNAME') }}"
+       role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+       password: "{{ env_var('DBT_SNOWFLAKE_PW') }}"
+       database: "{{ env_var('DBT_SNOWFLAKE_DATABASE') }}"
+       warehouse: "{{ env_var('DBT_SNOWFLAKE_WAREHOUSE') }}"
+       schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA') }}"
+       client_session_keep_alive: False
