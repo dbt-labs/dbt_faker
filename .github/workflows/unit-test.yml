@@ -39,7 +39,7 @@ jobs:
       - name: Generate and Run Python Model
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          dbt run-operation generate_faker_model > models/python.py
+          dbt --quiet run-operation generate_faker_model > models/python.py
           dbt run
       - name: Run dbt Tests
         working-directory: "${{ github.workspace }}/integration_tests"
