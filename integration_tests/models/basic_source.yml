@@ -9,7 +9,7 @@ sources:
       - name: orders
         meta:
           faker_enabled: true
-          faker_rows: 250
+          faker_rows: 150
         columns:
           - name: o_orderkey
             meta:
