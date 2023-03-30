@@ -14,7 +14,7 @@ def create_rows(dbt, session, source_name, table_name, num=1, **kwargs):
 
     df = session.create_dataframe([
         Row(**{
-            key: getattr(fake, value)()
+            key: getattr(fake, value[0])(**value[1])
             for key, value in kwargs.items()
         }) for x in range(num)
     ])
@@ -53,7 +53,11 @@ def model(dbt, session):
     {%- if (def_fake_provider|length) == 0 %}
         {%- set def_fake_provider='pystr' %}
     {%- endif %}
-    {{ column_names[column]['name'] | upper }}{{ "='" ~ def_fake_provider ~ "'" }}{{"," if not loop.last}}
+    {%- set def_fake_params=column_names[column]['meta'].faker_params %}
+    {%- if (def_fake_params|length) == 0 %}
+        {%- set def_fake_params={} %}
+    {%- endif %}
+    {{ column_names[column]['name'] | upper }}{{ "=['" ~ def_fake_provider ~ "'," ~ def_fake_params ~ "]" }}{{"," if not loop.last}}
     {%- endfor %}
     )
 
