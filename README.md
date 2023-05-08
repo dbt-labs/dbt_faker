@@ -18,6 +18,7 @@ packages:
 ## How to use it 
 ### 1. Add a source override macro in your project 
 Create the file `macro/dbt_faker_source_override.sql` that looks like this:
+
 ```
 {% macro source(source_name, table_name) %}
 {{ return(dbt_faker.dbt_faker_source(source_name, table_name)) }}
@@ -47,11 +48,19 @@ sources:
         columns:
           - name: o_orderkey
             meta:
-             faker_provider: pyint
+              faker_provider: pyint
 
           - name: o_order_date
             meta:
               faker_provider: date
+
+          # an example of using faker provider parameters
+          # see docs for this example at https://faker.readthedocs.io/en/master/providers/faker.providers.lorem.html#faker.providers.lorem.Provider.word
+          - name: o_customer_name
+            meta:
+              faker_provider: word
+              faker_params:
+                ext_word_list: ["customer A", "customer B", "customer C"]
 ```
 
 
