@@ -1,3 +1,15 @@
+# ***Archival Notice***
+This repository has been archived.
+
+As a result all of its historical issues and PRs have been closed.
+
+Please *do not clone* this repo without understanding the risk in doing so:
+- It may have unaddressed security vulnerabilities
+- It may have unaddressed bugs
+
+<details>
+   <summary>Click for historical readme</summary>
+
 # dbt faker 
 Generate fake/test/demo/sample data directly from dbt. dbt_faker is a python model generator for generating data within a [dbt](https://docs.getdbt.com/docs/introduction) project using the Python [Faker](https://faker.readthedocs.io/en/master/) project. 
 
@@ -8,12 +20,12 @@ Include in `packages.yml`:
 
 ```yaml
 packages:
-  - git: "https://github.com/dbt-labs/dbt_faker.git"
+  - git: &quot;https://github.com/dbt-labs/dbt_faker.git&quot;
     revision: main 
 ```
 
 ### Requirements 
-- dbt version >= 1.3
+- dbt version &gt;= 1.3
 
 ## How to use it 
 ### 1. Add a source override macro in your project 
@@ -60,7 +72,7 @@ sources:
             meta:
               faker_provider: word
               faker_params:
-                ext_word_list: ["customer A", "customer B", "customer C"]
+                ext_word_list: [&quot;customer A&quot;, &quot;customer B&quot;, &quot;customer C&quot;]
 ```
 
 
@@ -97,3 +109,4 @@ If a fake_provider has not been defined for a column, dbt faker will generate a 
 
 ### `dbt run -m dbt_faker.py` gives me a warning that the selector haven't found the model
     You may not be running dbt 1.3, needed to be able to execute dbt python models
+
